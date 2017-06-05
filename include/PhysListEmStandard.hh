@@ -23,63 +23,46 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/TestEm7/include/PhysicsList.hh
-/// \brief Definition of the PhysicsList class
+/// \file electromagnetic/TestEm7/include/PhysListEmStandard.hh
+/// \brief Definition of the PhysListEmStandard class
 //
-// $Id: PhysicsList.hh 82280 2014-06-13 14:45:31Z gcosmo $
-//
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//
-// 14.10.02 (V.Ivanchenko) provide modular list on base of old PhysicsList
+// $Id: PhysListEmStandard.hh 66586 2012-12-21 10:48:39Z ihrivnac $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#ifndef PhysicsList_h
-#define PhysicsList_h 1
+#ifndef PhysListEmStandard_h
+#define PhysListEmStandard_h 1
 
-#include "G4VModularPhysicsList.hh"
+#include "G4VPhysicsConstructor.hh"
 #include "globals.hh"
 
-class G4VPhysicsConstructor;
-class StepMax;
-class PhysicsListMessenger;
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class PhysicsList: public G4VModularPhysicsList
+class PhysListEmStandard : public G4VPhysicsConstructor
 {
-public:
+  public: 
+    PhysListEmStandard(const G4String& name = "standard");
+   ~PhysListEmStandard();
 
-  PhysicsList();
- ~PhysicsList();
-
-  virtual void ConstructParticle();
-    
-  void AddPhysicsList(const G4String& name);
-  virtual void ConstructProcess();
-    
-  void AddStepMax();       
-  StepMax* GetStepMaxProcess() {return fStepMaxProcess;};
-
-private:
-
-  void AddIonGasModels();
-
-  G4bool   fHelIsRegisted;
-  G4bool   fBicIsRegisted;
-  G4bool   fBiciIsRegisted;
-    
-  G4String                             fEmName;
-  G4VPhysicsConstructor*               fEmPhysicsList;
-  G4VPhysicsConstructor*               fDecPhysicsList;
-  std::vector<G4VPhysicsConstructor*>  fHadronPhys;    
-  StepMax*                             fStepMaxProcess;
-    
-  PhysicsListMessenger*  fMessenger;
+  public: 
+    // This method is dummy for physics
+    virtual void ConstructParticle() {};
+ 
+    // This method will be invoked in the Construct() method.
+    // each physics process will be instantiated and
+    // registered to the process manager of each particle type 
+    virtual void ConstructProcess();
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
+
+
+
+
+
+
+
 

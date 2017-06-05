@@ -23,63 +23,46 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file electromagnetic/TestEm7/include/PhysicsList.hh
-/// \brief Definition of the PhysicsList class
+/// \file electromagnetic/TestEm7/include/PhysListEmStandardNR.hh
+/// \brief Definition of the PhysListEmStandardNR class
 //
-// $Id: PhysicsList.hh 82280 2014-06-13 14:45:31Z gcosmo $
-//
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//
-// 14.10.02 (V.Ivanchenko) provide modular list on base of old PhysicsList
+// $Id: PhysListEmStandardNR.hh 66241 2012-12-13 18:34:42Z gunter $
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#ifndef PhysicsList_h
-#define PhysicsList_h 1
+#ifndef PhysListEmStandardNR_h
+#define PhysListEmStandardNR_h 1
 
-#include "G4VModularPhysicsList.hh"
+#include "G4VPhysicsConstructor.hh"
 #include "globals.hh"
 
-class G4VPhysicsConstructor;
-class StepMax;
-class PhysicsListMessenger;
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class PhysicsList: public G4VModularPhysicsList
+class PhysListEmStandardNR : public G4VPhysicsConstructor
 {
-public:
+public: 
+  PhysListEmStandardNR(const G4String& name = "standardNR");
+ ~PhysListEmStandardNR();
 
-  PhysicsList();
- ~PhysicsList();
-
-  virtual void ConstructParticle();
-    
-  void AddPhysicsList(const G4String& name);
+public: 
+  // This method is dummy for physics
+  virtual void ConstructParticle() {};
+ 
+  // This method will be invoked in the Construct() method.
+  // each physics process will be instantiated and
+  // registered to the process manager of each particle type 
   virtual void ConstructProcess();
-    
-  void AddStepMax();       
-  StepMax* GetStepMaxProcess() {return fStepMaxProcess;};
-
-private:
-
-  void AddIonGasModels();
-
-  G4bool   fHelIsRegisted;
-  G4bool   fBicIsRegisted;
-  G4bool   fBiciIsRegisted;
-    
-  G4String                             fEmName;
-  G4VPhysicsConstructor*               fEmPhysicsList;
-  G4VPhysicsConstructor*               fDecPhysicsList;
-  std::vector<G4VPhysicsConstructor*>  fHadronPhys;    
-  StepMax*                             fStepMaxProcess;
-    
-  PhysicsListMessenger*  fMessenger;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
+
+
+
+
+
+
+
 
